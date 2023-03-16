@@ -70,7 +70,7 @@ func compareTwoFiles(fileName string) {
 			fmt.Printf("工作表 %v 存在差异, 差异行如下: \n", sheetName)
 			for index, diff := range diffs {
 				fmt.Println(diff)
-				diffFile.SetSheetRow(sheetName, "A"+strconv.Itoa(index+1), diff)
+				diffFile.SetSheetRow(sheetName, "A"+strconv.Itoa(index+1), &diff)
 			}
 		} else {
 			fmt.Printf("工作表 %v 无差异 \n", sheetName)
