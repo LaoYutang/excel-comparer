@@ -2,3 +2,5 @@ diffs/*
 new/*
 old/*
 tmp
+
+*.exe

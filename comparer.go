@@ -1,17 +1,9 @@
 package main
 
-import (
-	"errors"
-)
-
 // 数组对比方法
-func comparer(data1 [][]string, data2 [][]string) ([][]string, error) {
-	// 行数不一致返回
-	if len(data1) != len(data2) {
-		return nil, errors.New("表格行数不一致")
-	}
-
+func comparer(data1 [][]string, data2 [][]string, resChan chan [][]string) {
 	var diffs [][]string
+
 	// 循环对比
 	for rowIndex, row := range data1 {
 		for cellIndex, cell := range row {
@@ -21,5 +13,5 @@ func comparer(data1 [][]string, data2 [][]string) ([][]string, error) {
 		}
 	}
 
-	return diffs, nil
+	resChan <- diffs
 }
