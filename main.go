@@ -12,8 +12,12 @@ import (
 
 var dirPath = "./"
 var fileGroup sync.WaitGroup
+var sortFlag int
 
 func main() {
+	fmt.Print("是否需要排序数据表, 0不排序 1排序: (0)")
+	fmt.Scanf("%d\n", &sortFlag)
+
 	// 读取old文件夹中的文件
 	files, err := os.ReadDir(dirPath + "/old")
 	if err != nil {
@@ -73,6 +77,9 @@ func compareTwoSheet(file1 *excelize.File, file2 *excelize.File, fileName string
 			fmt.Printf("[error]工作表获取失败 %v old %v", fileName, sheetName)
 			return
 		}
+		if sortFlag == 1 {
+			sortRows(data1)
+		}
 		data1Chan <- data1
 	}()
 	go func() {
@@ -80,6 +87,9 @@ func compareTwoSheet(file1 *excelize.File, file2 *excelize.File, fileName string
 		if sheetErr2 != nil {
 			fmt.Printf("[error]工作表获取失败 %v old %v", fileName, sheetName)
 			return
+		}
+		if sortFlag == 1 {
+			sortRows(data2)
 		}
 		data2Chan <- data2
 	}()
